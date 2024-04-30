@@ -21,7 +21,8 @@ function FatcVoter({ contract }) {
 
   return (
     <div>
-      <p className="text-dark h3">Voters Information</p>
+      <p className="text-neon-blue h3">Voters Information</p>{" "}
+      {/* Applied text-neon-blue class */}
       {voters.map((voter, index) => (
         <div key={index}>
           <table>

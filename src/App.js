@@ -6,7 +6,6 @@ import FetchCandi from "./comp/FatchCandi";
 import FatcVoter from "./comp/FatcVoter";
 import Proposal from "./comp/Propsal";
 import Vote from "./comp/Vote";
-
 const ABI = ABIFILE.abi;
 const ContractAddress = "0x0fee2908afda3d25e876c05ed5a6b9e40c37d909";
 
@@ -68,24 +67,27 @@ function App() {
 
   return (
     <div
-      className="mx-auto p-4 text-light"
+      className="mx-auto p-4 text-light shadow-neon"
       style={{
         maxWidth: 1200,
         margin: "auto",
-        marginTop: 50, // Increased height
-        marginBottom: 50, // Increased height
-        backgroundColor: "white",
+        marginTop: 20, // Decreased height
+        marginBottom: 20, // Decreased height
+        backgroundColor: "black",
+        border: "3px solid #0ff", // Neon blue border
       }}
     >
-      <p className="text-center h3 text-primary p-2 ">
+      <p className="text-center h5 neon-blue-text p-2">
         Blockchain for Electronic Voting System
       </p>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-start">
+        {" "}
+        {/* Adjusted justify-content to start */}
         <button
           onClick={Connect}
           id="connectbtn"
-          className="btn btn-success mx-4" // Increased space between buttons
-          style={{ height: 50, overflow: "hidden", textOverflow: "ellipsis" }} // Adjust button height and text overflow
+          className="btn btn-neon-blue mx-2" // Changed margin to mx-2 for spacing
+          style={{ height: 60, overflow: "hidden", textOverflow: "ellipsis" }} // Adjust button height and text overflow
         >
           {!loading ? (
             "Connect"
@@ -99,12 +101,11 @@ function App() {
             />
           )}
         </button>
-
         <button
           onClick={Disconnect}
-          className="btn btn-success mx-4" // Increased space between buttons
+          className="btn btn-neon-blue mx-4" // Changed margin to mx-4 for spacing
           disabled={!isOff}
-          style={{ height: 50 }} // Adjust button height as needed
+          style={{ height: 60 }} // Adjust button height as needed
         >
           Disconnect
         </button>
