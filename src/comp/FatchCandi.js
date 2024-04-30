@@ -17,6 +17,7 @@ function FetchCandi({ contract }) {
       } catch (error) {
         console.error("Error fetching candidates:", error);
         setLoading(false);
+        setError("Failed to fetch candidates. Please try again."); // Set error message
       }
     };
 
@@ -32,9 +33,20 @@ function FetchCandi({ contract }) {
 
   return (
     <div>
-      <p className="text-dark h3">Candidates</p>
-      {loading && <p className="text-dark">Loading candidates...</p>}
+      <p className="text-neon-blue h3">Candidates</p>{" "}
+      {/* Applied text-neon-blue class */}
       {error && <p className="text-danger">{error}</p>}
+      <div>
+        <button
+          className="btn btn-neon-blue rounded-pill mr-4 text-white"
+          disabled
+        >
+          Les
+        </button>
+        <button className="btn btn-neon-blue rounded-pill text-white" disabled>
+          Alex
+        </button>
+      </div>
     </div>
   );
 }
