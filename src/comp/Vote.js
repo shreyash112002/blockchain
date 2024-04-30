@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as ReactBootStrap from "react-bootstrap";
 import { Web3 } from "web3"; // Correct import statement
+import "./Proposal.css"; // Import CSS file for styling
 
 function Vote({ contract, account, provider }) {
   const [showVote, setShowVote] = useState(false);
@@ -9,6 +10,10 @@ function Vote({ contract, account, provider }) {
   const [voterName, setVoterName] = useState("");
   const [candidateAddress, setCandidateAddress] = useState("");
   const [voterDetails, setVoterDetails] = useState(null);
+  const predefinedAddresses = [
+    "0x6BC5BC90D9e80A4504b69B0118282898ce6BbeB1",
+    "0x2AAD4FFDefCAB7D7Dd0B8D500a8f70c1A38513e4",
+  ];
 
   const toggleVoteForm = () => {
     setShowVote(!showVote);
@@ -67,7 +72,7 @@ function Vote({ contract, account, provider }) {
         <button
           onClick={toggleVoteForm}
           disabled={!account}
-          className="btn btn-dark text-light"
+          className="btn btn-neon-blue text-light"
         >
           Vote To Candidate!
         </button>
@@ -76,19 +81,20 @@ function Vote({ contract, account, provider }) {
       {showVote && (
         <form onSubmit={handleVote}>
           <div className="mt3">
-            <p className="h5 text-dark">Voter Address : {account}</p>
+            <p className="h5 connected-address">Voter Address : {account}</p>
           </div>
           <div className="form-group">
-            <label className="text-dark">Your ID</label>
+            <label>Your ID</label>
             <input
               type="text"
+              color="black"
               value={voterId}
               onChange={(e) => setVoterId(e.target.value)}
               className="form-control"
             />
           </div>
           <div className="form-group">
-            <label className="text-dark">Your Name</label>
+            <label>Your Name</label>
             <input
               type="text"
               value={voterName}
@@ -97,17 +103,17 @@ function Vote({ contract, account, provider }) {
             />
           </div>
           <div className="form-group">
-            <label className="text-dark">Candidate Address</label>
+            <label>Candidate Address</label>
             <input
               type="text"
               value={candidateAddress}
-              onChange={(e) => setCandidateAddress(e.target.value)} // Ensure only the input value is set
+              onChange={(e) => setCandidateAddress(e.target.value)}
               className="form-control"
             />
           </div>
           <button
             type="submit"
-            className="btn btn-dark mt-2"
+            className="btn btn-neon-blue mt-2"
             disabled={loading}
           >
             {!loading ? (
@@ -125,7 +131,9 @@ function Vote({ contract, account, provider }) {
         </form>
       )}
       {voterDetails && (
-        <div className="mt-3">
+        <div className="mt-3 text-white">
+          {" "}
+          {/* Changed text color to white */}
           <h5>Voter Details:</h5>
           <p>Voter ID: {voterDetails.voterId}</p>
           <p>Voter Name: {voterDetails.voterName}</p>
