@@ -1,0 +1,20 @@
+.btn-neon-blue {
+   background-color: #007bff; /* Darker Neon Blue background */
+  color: #ffffff; /* White text color for better readability */
+  box-shadow: 0 0 10px 5px rgba(0, 127, 255, 0.5); 
+  border: none;
+  outline: none;
+  padding: 8px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-neon-blue:hover {
+  background-color: #00cccc; /* Darker shade of neon blue on hover */
+}
+.connected-address {
+  max-width: 200px; /* Adjust as needed */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Display ellipsis for overflow text */
+  white-space: nowrap; /* Prevent text from wrapping */
+}
