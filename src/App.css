@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+.neon-blue-text {
+  color: #00ffff; /* Neon blue color */
+}
+
