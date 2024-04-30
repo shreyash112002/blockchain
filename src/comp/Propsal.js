@@ -103,13 +103,13 @@ function Propsal({ contract, account, provider }) {
       {showPropsal && (
         <form onSubmit={submitPropsal} className="form-group">
           <div className="m-3">
-            <p className="h5">Connected Address: {account}</p>
+            <p className="h5 text-dark" >Connected Address: {account}</p>
           </div>
-          <div className="p-2">
+          <div className="p-2 text-dark">
             Address of Candidate:
             <input type="text" id="Account" className="form-control" />
           </div>
-          <div className="p-2">
+          <div className="p-2 text-dark">
             Name of Candidate:
             <input type="text" id="Name" className="form-control" />
           </div>

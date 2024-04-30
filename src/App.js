@@ -74,10 +74,10 @@ function App() {
         margin: "auto",
         marginTop: 50, // Increased height
         marginBottom: 50, // Increased height
-        backgroundColor: "rgb(135,62,35)",
+        backgroundColor: "white",
       }}
     >
-      <p className="text-center h5 text-warning p-2">
+      <p className="text-center h3 text-primary p-2 ">
         Blockchain for Electronic Voting System
       </p>
       <div className="d-flex justify-content-between">

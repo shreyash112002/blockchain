@@ -33,7 +33,7 @@ function FetchCandi({ contract }) {
   return (
     <div>
       <p className="text-dark h3">Candidates</p>
-      {loading && <p>Loading candidates...</p>}
+      {loading && <p className="text-dark">Loading candidates...</p>}
       {error && <p className="text-danger">{error}</p>}
     </div>
   );

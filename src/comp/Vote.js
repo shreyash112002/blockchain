@@ -76,10 +76,10 @@ function Vote({ contract, account, provider }) {
       {showVote && (
         <form onSubmit={handleVote}>
           <div className="mt3">
-            <p className="h5">Voter Address : {account}</p>
+            <p className="h5 text-dark">Voter Address : {account}</p>
           </div>
           <div className="form-group">
-            <label>Your ID</label>
+            <label className="text-dark">Your ID</label>
             <input
               type="text"
               value={voterId}
@@ -88,7 +88,7 @@ function Vote({ contract, account, provider }) {
             />
           </div>
           <div className="form-group">
-            <label>Your Name</label>
+            <label className="text-dark">Your Name</label>
             <input
               type="text"
               value={voterName}
@@ -97,7 +97,7 @@ function Vote({ contract, account, provider }) {
             />
           </div>
           <div className="form-group">
-            <label>Candidate Address</label>
+            <label className="text-dark">Candidate Address</label>
             <input
               type="text"
               value={candidateAddress}
