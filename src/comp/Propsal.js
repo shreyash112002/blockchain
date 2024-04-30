@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import * as ReactBootStrap from "react-bootstrap";
 import Web3 from "web3"; // Import Web3 instead of 'web3'
+import "./Proposal.css"; // Import CSS file for styling
 
 function Propsal({ contract, account, provider }) {
   const [showPropsal, setShowPropsal] = useState(false);
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newCandidate, setNewCandidate] = useState(null);
+  const predefinedAddresses = [
+    "0x6BC5BC90D9e80A4504b69B0118282898ce6BbeB1",
+    "0x2AAD4FFDefCAB7D7Dd0B8D500a8f70c1A38513e4",
+  ];
+  const [selectedAddress, setSelectedAddress] = useState(""); // State for selected address
+  const [selectedName, setSelectedName] = useState(""); // State for selected name
 
   useEffect(() => {
     if (contract) {
@@ -28,8 +35,8 @@ function Propsal({ contract, account, provider }) {
 
   const submitPropsal = async (e) => {
     e.preventDefault();
-    const accountInput = document.getElementById("Account").value;
-    const nameInput = document.getElementById("Name").value;
+    const accountInput = selectedAddress; // Use the selected address
+    const nameInput = selectedName; // Use the selected name
 
     console.log("Account:", accountInput);
     console.log("Name:", nameInput);
@@ -76,44 +83,49 @@ function Propsal({ contract, account, provider }) {
       localStorage.setItem("candidates", JSON.stringify(fetchedCandidates));
     } catch (error) {
       console.error("Error while fetching candidates:", error);
-
-    }
-  };
-
-  const disconnect = () => {
-    if (typeof window !== "undefined") {
-      if (window.localStorage.getItem("Connected")) {
-        window.localStorage.removeItem("Connected");
-        window.location.reload();
-      } else {
-        // Handle case if already disconnected
-      }
     }
   };
 
   return (
     <div>
       <br />
-      <button onClick={togglePropsalForm} className="btn btn-primary">
+      <button onClick={togglePropsalForm} className="btn btn-neon-blue">
         Send Proposal For Next Election!
-      </button>
-      <button onClick={disconnect} className="btn btn-danger ml-2">
-        Disconnect
       </button>
       {showPropsal && (
         <form onSubmit={submitPropsal} className="form-group">
           <div className="m-3">
-            <p className="h5 text-dark" >Connected Address: {account}</p>
+            <p className="h5">Connected Address:</p>
+            <div className="connected-address">{account}</div>
           </div>
-          <div className="p-2 text-dark">
+          <div className="p-2">
             Address of Candidate:
-            <input type="text" id="Account" className="form-control" />
+            <select
+              value={selectedAddress}
+              onChange={(e) => setSelectedAddress(e.target.value)} // Set selected address
+              className="form-control"
+            >
+              <option value="">Select Candidate Address</option>
+              {predefinedAddresses.map((address, index) => (
+                <option key={index} value={address}>
+                  {address}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="p-2 text-dark">
+          <div className="p-2">
             Name of Candidate:
-            <input type="text" id="Name" className="form-control" />
+            <select
+              value={selectedName}
+              onChange={(e) => setSelectedName(e.target.value)} // Set selected name
+              className="form-control"
+            >
+              <option value="">Select Candidate Name</option>
+              <option value="Alex">Alex</option>
+              <option value="Les">Les</option>
+            </select>
           </div>
-          <button type="submit" className="btn btn-dark mt-2">
+          <button type="submit" className="btn btn-neon-blue mt-2">
             {!loading ? (
               "Submit Now!"
             ) : (
@@ -137,10 +149,12 @@ function Propsal({ contract, account, provider }) {
           <table>
             <tbody>
               <tr>
-                <td className="p-2">Name: {newCandidate.name}</td>
-                <td className="p-2">
-                  Address: {newCandidate._CandidateAddress}
-                </td>
+                <td className="p-2">Name:</td>
+                <td className="p-2">{newCandidate.name}</td>
+              </tr>
+              <tr>
+                <td className="p-2">Address:</td>
+                <td className="p-2">{newCandidate._CandidateAddress}</td>
               </tr>
             </tbody>
           </table>
@@ -148,15 +162,16 @@ function Propsal({ contract, account, provider }) {
       )}
 
       <div className="mt-3">
-        <button onClick={fetchCandidates} className="btn btn-success">
-          Fetch Next Candidates
-        </button>
         {candidates.map((candidate) => (
           <div key={candidate.name}>
             <table>
               <tbody>
                 <tr>
+                  <td className="p-2">Name:</td>
                   <td className="p-2">{candidate.name}</td>
+                </tr>
+                <tr>
+                  <td className="p-2">Address:</td>
                   <td className="p-2">{candidate._CandidateAddress}</td>
                 </tr>
               </tbody>
