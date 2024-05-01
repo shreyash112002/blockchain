@@ -10,10 +10,10 @@ function Vote({ contract, account, provider }) {
   const [voterName, setVoterName] = useState("");
   const [candidateAddress, setCandidateAddress] = useState("");
   const [voterDetails, setVoterDetails] = useState(null);
-  const predefinedAddresses = [
+  const [predefinedAddresses, setPredefinedAddresses] = useState([
     "0x6BC5BC90D9e80A4504b69B0118282898ce6BbeB1",
     "0x2AAD4FFDefCAB7D7Dd0B8D500a8f70c1A38513e4",
-  ];
+  ]);
 
   const toggleVoteForm = () => {
     setShowVote(!showVote);
@@ -104,12 +104,18 @@ function Vote({ contract, account, provider }) {
           </div>
           <div className="form-group">
             <label>Candidate Address</label>
-            <input
-              type="text"
+            <select
               value={candidateAddress}
               onChange={(e) => setCandidateAddress(e.target.value)}
               className="form-control"
-            />
+            >
+              <option value="">Select Candidate Address</option>
+              {predefinedAddresses.map((address, index) => (
+                <option key={index} value={address}>
+                  {address}
+                </option>
+              ))}
+            </select>
           </div>
           <button
             type="submit"
@@ -132,8 +138,6 @@ function Vote({ contract, account, provider }) {
       )}
       {voterDetails && (
         <div className="mt-3 text-white">
-          {" "}
-          {/* Changed text color to white */}
           <h5>Voter Details:</h5>
           <p>Voter ID: {voterDetails.voterId}</p>
           <p>Voter Name: {voterDetails.voterName}</p>
