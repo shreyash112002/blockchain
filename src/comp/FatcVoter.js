@@ -7,10 +7,10 @@ function FatcVoter({ contract }) {
     const fetchVoters = async () => {
       try {
         const fetchedVoters = await contract.getVoters();
-        console.log("Fetched voters:", fetchedVoters);
+        
         setVoters(fetchedVoters);
       } catch (error) {
-        console.error("Error while fetching voters:", error);
+        
       }
     };
 
