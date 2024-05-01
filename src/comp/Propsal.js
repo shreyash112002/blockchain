@@ -3,17 +3,14 @@ import * as ReactBootStrap from "react-bootstrap";
 import Web3 from "web3"; // Import Web3 instead of 'web3'
 import "./Proposal.css"; // Import CSS file for styling
 
-function Propsal({ contract, account, provider }) {
-  const [showPropsal, setShowPropsal] = useState(false);
+function Proposal({ contract, account, provider, handleNewAddress }) {
+  const [showProposal, setShowProposal] = useState(false);
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newCandidate, setNewCandidate] = useState(null);
-  const predefinedAddresses = [
-    "0x6BC5BC90D9e80A4504b69B0118282898ce6BbeB1",
-    "0x2AAD4FFDefCAB7D7Dd0B8D500a8f70c1A38513e4",
-  ];
   const [selectedAddress, setSelectedAddress] = useState(""); // State for selected address
   const [selectedName, setSelectedName] = useState(""); // State for selected name
+  const [receipt, setReceipt] = useState(null); // State for receipt
 
   useEffect(() => {
     if (contract) {
@@ -29,11 +26,11 @@ function Propsal({ contract, account, provider }) {
     }
   }, []);
 
-  const togglePropsalForm = () => {
-    setShowPropsal(!showPropsal);
+  const toggleProposalForm = () => {
+    setShowProposal(!showProposal);
   };
 
-  const submitPropsal = async (e) => {
+  const submitProposal = async (e) => {
     e.preventDefault();
     const accountInput = selectedAddress; // Use the selected address
     const nameInput = selectedName; // Use the selected name
@@ -65,10 +62,14 @@ function Propsal({ contract, account, provider }) {
       // Set the new candidate for rendering
       setNewCandidate({ name: nameInput, _CandidateAddress: accountInput });
 
+      // Pass the new address to the handleNewAddress function
+      handleNewAddress(accountInput);
+
+      // Set receipt in state
+      setReceipt(receipt);
+
       setLoading(false);
     } catch (error) {
-      console.error("Error while submitting proposal:", error);
-      alert("Failed to submit proposal. Please check console for details.");
       setLoading(false);
     }
   };
@@ -76,54 +77,44 @@ function Propsal({ contract, account, provider }) {
   const fetchCandidates = async () => {
     try {
       const fetchedCandidates = await contract.getRequestPropsal();
-      console.log("Fetched candidates:", fetchedCandidates);
       setCandidates(fetchedCandidates);
 
       // Save candidates to local storage
       localStorage.setItem("candidates", JSON.stringify(fetchedCandidates));
     } catch (error) {
-      console.error("Error while fetching candidates:", error);
+      
     }
   };
 
   return (
     <div>
       <br />
-      <button onClick={togglePropsalForm} className="btn btn-neon-blue">
+      <button onClick={toggleProposalForm} className="btn btn-neon-blue">
         Send Proposal For Next Election!
       </button>
-      {showPropsal && (
-        <form onSubmit={submitPropsal} className="form-group">
+      {showProposal && (
+        <form onSubmit={submitProposal} className="form-group">
           <div className="m-3">
             <p className="h5">Connected Address:</p>
             <div className="connected-address">{account}</div>
           </div>
           <div className="p-2">
             Address of Candidate:
-            <select
+            <input
+              type="text"
               value={selectedAddress}
               onChange={(e) => setSelectedAddress(e.target.value)} // Set selected address
               className="form-control"
-            >
-              <option value="">Select Candidate Address</option>
-              {predefinedAddresses.map((address, index) => (
-                <option key={index} value={address}>
-                  {address}
-                </option>
-              ))}
-            </select>
+            />
           </div>
           <div className="p-2">
             Name of Candidate:
-            <select
+            <input
+              type="text"
               value={selectedName}
               onChange={(e) => setSelectedName(e.target.value)} // Set selected name
               className="form-control"
-            >
-              <option value="">Select Candidate Name</option>
-              <option value="Alex">Alex</option>
-              <option value="Les">Les</option>
-            </select>
+            />
           </div>
           <button type="submit" className="btn btn-neon-blue mt-2">
             {!loading ? (
@@ -161,6 +152,16 @@ function Propsal({ contract, account, provider }) {
         </div>
       )}
 
+      {/* Display receipt if available */}
+      {receipt && (
+        <div>
+          <h4>Transaction Receipt:</h4>
+          <p>Sender Name: {receipt.from}</p>
+          <p>Receiver Name: {receipt.to}</p>
+          <p>Gas Used: {receipt.gasUsed}</p>
+        </div>
+      )}
+
       <div className="mt-3">
         {candidates.map((candidate) => (
           <div key={candidate.name}>
@@ -183,4 +184,4 @@ function Propsal({ contract, account, provider }) {
   );
 }
 
-export default Propsal;
+export default Proposal;
