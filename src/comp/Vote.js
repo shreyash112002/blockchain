@@ -11,8 +11,8 @@ function Vote({ contract, account, provider }) {
   const [candidateAddress, setCandidateAddress] = useState("");
   const [voterDetails, setVoterDetails] = useState(null);
   const [predefinedAddresses, setPredefinedAddresses] = useState([
-    "0x6BC5BC90D9e80A4504b69B0118282898ce6BbeB1",
-    "0x2AAD4FFDefCAB7D7Dd0B8D500a8f70c1A38513e4",
+    { address: "0x6BC5BC90D9e80A4504b69B0118282898ce6BbeB1", name: "Les" },
+    { address: "0x2AAD4FFDefCAB7D7Dd0B8D500a8f70c1A38513e4", name: "Alex" },
   ]);
 
   const toggleVoteForm = () => {
@@ -110,9 +110,9 @@ function Vote({ contract, account, provider }) {
               className="form-control"
             >
               <option value="">Select Candidate Address</option>
-              {predefinedAddresses.map((address, index) => (
-                <option key={index} value={address}>
-                  {address}
+              {predefinedAddresses.map((candidate, index) => (
+                <option key={index} value={candidate.address}>
+                  {`${candidate.name} - ${candidate.address}`}
                 </option>
               ))}
             </select>
