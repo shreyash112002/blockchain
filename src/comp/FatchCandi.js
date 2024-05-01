@@ -8,14 +8,13 @@ function FetchCandi({ contract }) {
     const fetchCandidates = async () => {
       try {
         setLoading(true);
-        console.log("Fetching candidates...");
         if (contract && contract.methods && contract.methods.getCandidates) {
           await contract.methods.getCandidates().call();
           setLoading(false);
           setError(null);
         }
       } catch (error) {
-        console.error("Error fetching candidates:", error);
+        
         setLoading(false);
         setError("Failed to fetch candidates. Please try again."); // Set error message
       }
